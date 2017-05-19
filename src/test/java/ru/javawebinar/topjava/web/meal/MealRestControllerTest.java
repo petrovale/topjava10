@@ -90,4 +90,12 @@ public class MealRestControllerTest extends AbstractControllerTest {
                         MealsUtil.createWithExceed(MEAL1, false)));
     }
 
+    @Test
+    public void testGetNewBetween() throws Exception {
+        mockMvc.perform(get(REST_URL + "between?startDateTime=2015-05-31T07:00&endDateTime=2015-05-31T11:00:00"))
+                .andExpect(status().isOk()).andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
+                        MealsUtil.createWithExceed(MEAL4, true)));
+    }
 }
