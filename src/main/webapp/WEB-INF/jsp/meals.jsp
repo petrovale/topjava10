@@ -14,7 +14,57 @@
         <div class="shadow">
             <h3><spring:message code="meals.title"/></h3>
             <div class="view-box">
-                <form method="post" action="meals/filter">
+                <%-- fsdf--%>
+                <form class="form-horizontal" id="detailsFormFilter">
+                    <div class="form-group">
+                        <label for="startDate" class="control-label col-xs-1"><spring:message code="meals.startDate"/></label>
+
+                        <div class="col-xs-3">
+                            <input type="date" class="form-control" id="startDate" name="startDate" placeholder="<spring:message code="meals.startDate"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate" class="control-label col-xs-1"><spring:message code="meals.endDate"/></label>
+
+                        <div class="col-xs-3">
+                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="<spring:message code="meals.endDate"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startTime" class="control-label col-xs-1"><spring:message code="meals.startTime"/></label>
+
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="startTime" name="startTime" placeholder="<spring:message code="meals.startTime"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endTime" class="control-label col-xs-1"><spring:message code="meals.endTime"/></label>
+
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="endTime" name="endTime" placeholder="<spring:message code="meals.endTime"/>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-1 col-xs-9">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <a class="btn btn-default" type="button" onclick="filterTable()">
+                            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                            <spring:message code="meals.filter"/>
+                        </a>
+                    </div>
+                </form>
+
+              <%--  <form method="post" action="meals/filter">
                     <dl>
                         <dt><spring:message code="meals.startDate"/>:</dt>
                         <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -33,6 +83,8 @@
                     </dl>
                     <button type="submit"><spring:message code="meals.filter"/></button>
                 </form>
+                --%>
+                <%-- fsdf--%>
                 <a class="btn btn-info" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>

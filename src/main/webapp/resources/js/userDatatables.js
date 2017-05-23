@@ -40,3 +40,11 @@ $(function () {
     });
     makeEditable();
 });
+
+function updateTableNew() {
+    $.get(ajaxUrl, function (data) {
+        datatableApi.clear();
+        datatableApi.rows.add(data);
+        datatableApi.draw();
+    });
+}

@@ -28,9 +28,23 @@ $(function () {
         "order": [
             [
                 0,
-                "asc"
+                "desc"
             ]
         ]
     });
     makeEditable();
 });
+
+function updateTableNew() {
+    var startDate = $("#startDate").val();
+    var startTime = $("#startTime").val();
+    var endDate = $("#endDate").val();
+    var endTime = $("#endTime").val();
+
+    $.get(ajaxUrl + "filter", { startDate:startDate, startTime:startTime, endDate:endDate, endTime:endTime },
+        function (data) {
+            datatableApi.clear();
+            datatableApi.rows.add(data);
+            datatableApi.draw();
+        });
+}

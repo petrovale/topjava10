@@ -23,7 +23,8 @@ function deleteRow(id) {
         url: ajaxUrl + id,
         type: 'DELETE',
         success: function () {
-            updateTable();
+            //updateTable();
+            updateTableNew();
             successNoty('Deleted');
         }
     });
@@ -47,7 +48,8 @@ function save() {
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
-            updateTable();
+            //updateTable();
+            updateTableNew();
             successNoty('Saved');
         }
     });
