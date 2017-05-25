@@ -36,4 +36,8 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @EntityGraph(attributePaths={"meals", "roles"})
     @Query("SELECT u FROM User u WHERE u.id=?1")
     User getWithMeals(int id);
+
+    @Modifying
+    @Query("UPDATE User u SET u.enabled=:enabled WHERE u.id=:id")
+    int updateCheck(@Param("enabled") boolean enabled, @Param("id") int id);
 }

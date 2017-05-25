@@ -17,7 +17,7 @@ $(function () {
                 "data": "roles"
             },
             {
-                "data": "enabled"
+                "data":   "enabled"
             },
             {
                 "data": "registered"
@@ -39,6 +39,21 @@ $(function () {
         ]
     });
     makeEditable();
+
+    $('input:checkbox').click(function () {
+        var check_id = $(this).attr("id");
+        var check = $(this).prop( 'checked' );
+
+        $.ajax({
+            url: ajaxUrl + check_id,
+            type: 'POST',
+            data: "checked="+check,
+            success: function () {
+                updateTableNew();
+                successNoty('update');
+            }
+        });
+    });
 });
 
 function updateTableNew() {

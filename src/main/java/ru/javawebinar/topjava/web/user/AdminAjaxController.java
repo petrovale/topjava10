@@ -43,4 +43,9 @@ public class AdminAjaxController extends AbstractUserController {
             super.update(user, id);
         }
     }
+
+    @PostMapping(value = "/{id}")
+    public void updateCheck(@RequestParam(value = "checked") boolean checked, @PathVariable("id") int id) {
+        super.updateCheck(checked, id);
+    }
 }

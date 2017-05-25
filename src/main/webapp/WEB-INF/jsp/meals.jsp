@@ -49,15 +49,14 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-xs-offset-1 col-xs-9">
-                            <button type="submit" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-default" onclick="resetFilterTable()">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            Cброс фильтра
+                        </button>
                     </div>
 
                     <div class="form-group">
-                        <a class="btn btn-default" type="button" onclick="filterTable()">
+                        <a class="btn btn-default" type="button" onclick="updateTableNew()">
                             <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
                             <spring:message code="meals.filter"/>
                         </a>

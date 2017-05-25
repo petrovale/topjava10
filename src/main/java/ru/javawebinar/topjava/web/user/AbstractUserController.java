@@ -50,4 +50,9 @@ public abstract class AbstractUserController {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
     }
+
+    public void updateCheck(boolean checked, int id) {
+        log.info("updateCheck {}", checked);
+        service.updateCheck(checked, id);
+    }
 }
