@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -53,6 +54,12 @@ public abstract class AbstractMealController {
         checkIdConsistent(meal, id);
         LOG.info("update {} for User {}", meal, userId);
         service.update(meal, userId);
+    }
+
+    public void update(MealTo mealTo) {
+        int userId = AuthorizedUser.id();
+        LOG.info("update ", mealTo);
+        service.update(mealTo, userId);
     }
 
     /**
