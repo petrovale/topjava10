@@ -1,11 +1,43 @@
 var ajaxUrl = "ajax/profile/meals/";
 var datatableApi;
 
+$('#startDate').datetimepicker({
+    timepicker:false,
+    format:'d.m.Y'
+});
+
+$('#startTime').datetimepicker({
+    datepicker:false,
+    format:'H:i'
+});
+
+$('#endTime').datetimepicker({
+    datepicker:false,
+    format:'H:i'
+});
+
+$('#endDate').datetimepicker({
+    timepicker:false,
+    format:'d.m.Y'
+});
+
 function updateTable() {
+    var newStartDate = $("#startDate").val().substring(6, 10) + "-"
+        + $("#startDate").val().substring(3, 5) + "-"
+        + $("#startDate").val().substring(0, 2);
+    var newEndDate = $("#endDate").val().substring(6, 10) + "-"
+        + $("#endDate").val().substring(3, 5) + "-"
+        + $("#endDate").val().substring(0, 2);
+
     $.ajax({
         type: "POST",
         url: ajaxUrl + "filter",
-        data: $("#filter").serialize(),
+        data: {
+            startDate: (newStartDate.length >2) ? newStartDate : "",
+            startTime: $("#startTime").val(),
+            endDate: (newEndDate.length >2) ? newEndDate : "",
+            endTime: $("#endTime").val()
+        },
         success: updateTableByData
     });
 }
