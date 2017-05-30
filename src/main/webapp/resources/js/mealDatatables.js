@@ -1,24 +1,21 @@
 var ajaxUrl = "ajax/profile/meals/";
 var datatableApi;
 
-$('#startDate').datetimepicker({
-    timepicker:false,
-    format:'d.m.Y'
-});
+$(function () {
+    $('#startDate').datetimepicker({
+        format: 'D.MM.YYYY'
+    });
+    $('#endDate').datetimepicker({
+        format: 'D.MM.YYYY'
+    });
+    $('#startTime').datetimepicker({
+        format: 'HH:mm'
+    });
+    $('#endTime').datetimepicker({
+        format: 'HH:mm'
+    });
 
-$('#startTime').datetimepicker({
-    datepicker:false,
-    format:'H:i'
-});
 
-$('#endTime').datetimepicker({
-    datepicker:false,
-    format:'H:i'
-});
-
-$('#endDate').datetimepicker({
-    timepicker:false,
-    format:'d.m.Y'
 });
 
 function updateTable() {
