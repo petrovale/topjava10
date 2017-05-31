@@ -9,7 +9,7 @@
     <div class="container">
         <div class="navbar-header navbar-brand"><spring:message code="app.title"/></div>
         <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" role="form" action="spring_security_check" method="post">
+            <form class="navbar-form navbar-right" role="form" action="perform_login" method="post">
                 <div class="form-group">
                     <input type="text" placeholder="Email" class="form-control" name="username">
                 </div>

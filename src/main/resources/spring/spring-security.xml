@@ -24,7 +24,7 @@
 
         <form-login login-page="/login" default-target-url="/meals"
                     authentication-failure-url="/login?error=true"
-                    login-processing-url="/spring_security_check"/>
+                    login-processing-url="/perform_login"/>
         <logout logout-success-url="/login"/>
         <csrf disabled="true"/>
     </http>
