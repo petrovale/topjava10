@@ -6,8 +6,12 @@ public class ErrorInfo {
     private final String detail;
 
     public ErrorInfo(CharSequence url, Throwable ex) {
+        this(url, ex.getClass().getSimpleName(), ex.getLocalizedMessage());
+    }
+
+    public ErrorInfo(CharSequence url, String simpleName, String localizedMessage) {
         this.url = url.toString();
-        this.cause = ex.getClass().getSimpleName();
-        this.detail = ex.getLocalizedMessage();
+        this.cause = simpleName;
+        this.detail = localizedMessage;
     }
 }
