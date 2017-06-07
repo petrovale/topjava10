@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
@@ -43,11 +44,27 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true);
     }
 
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY) // 422
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ErrorInfo argumentNotValidError(HttpServletRequest req, MethodArgumentNotValidException e) {
+        return logAndGetErrorInfo(req, e);
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler(BindException.class)
     @ResponseBody
     public ErrorInfo bindError(HttpServletRequest req, BindException e) {
         return logAndGetErrorInfo(req, e);
+    }
+
+    private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, MethodArgumentNotValidException e) {
+        StringBuilder sb = new StringBuilder();
+        e.getBindingResult().getFieldErrors().forEach(fe -> sb.append(fe.getField() + " ").append(fe.getDefaultMessage()).append("<br>"));
+
+        LOG.warn("Exception at request " + req.getRequestURL() + ": " + sb.toString());
+
+        return new ErrorInfo(req.getRequestURL(), e.getClass().getSimpleName(), sb.toString());
     }
 
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, BindException e) {
