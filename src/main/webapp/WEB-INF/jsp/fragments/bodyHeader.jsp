@@ -5,7 +5,11 @@
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
+
         <a href="meals" class="navbar-brand"><spring:message code="app.title"/></a>
+
+        <a href="?language=en" class="navbar-brand">English&raquo;</a>
+        <a href="?language=ru" class="navbar-brand">Russian&raquo;</a>
 
         <div class="collapse navbar-collapse">
             <form:form class="navbar-form navbar-right" action="logout" method="post">

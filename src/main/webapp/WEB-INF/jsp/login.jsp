@@ -9,6 +9,10 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header navbar-brand"><spring:message code="app.title"/></div>
+
+        <a href="login?language=en" class="navbar-brand">English&raquo;</a>
+        <a href="login?language=ru" class="navbar-brand">Russian&raquo;</a>
+
         <div class="navbar-collapse collapse">
             <form:form class="navbar-form navbar-right" role="form" action="spring_security_check" method="post">
                 <div class="form-group">
@@ -69,6 +73,7 @@
             <a href="http://jquery.com/">jQuery</a>,
             <a href="http://ned.im/noty/">jQuery notification</a>,
             <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+        Current Locale : ${pageContext.response.locale}
     </div>
 </div>
 <div class="container">

@@ -22,9 +22,6 @@ import javax.validation.Valid;
 public class RootController extends AbstractUserController {
 
     @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
     public RootController(UserService service) {
         super(service);
     }
