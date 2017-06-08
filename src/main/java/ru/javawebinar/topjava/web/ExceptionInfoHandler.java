@@ -2,6 +2,9 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,11 +19,24 @@ import ru.javawebinar.topjava.util.exception.ErrorInfo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @ControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {
     private static Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
+
+    @Autowired
+    private MessageSource messageSource;
+
+    private static Map<String, String> constraintCodeMap = new HashMap<String, String>() {
+        {
+            put("users_unique_email_idx", "exception.user.duplicateEmail");
+            put("meals_unique_user_datetime_idx", "exception.meals.duplicate_datetime");
+        }
+    };
 
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
@@ -34,7 +50,19 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseBody
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-        return logAndGetErrorInfo(req, e, true);
+        String rootMsg = ValidationUtil.getRootCause(e).getMessage();
+
+        if (rootMsg != null) {
+            Optional<Map.Entry<String, String>> entry = constraintCodeMap.entrySet().stream()
+                    .filter((it) -> rootMsg.contains(it.getKey()))
+                    .findAny();
+            if (entry.isPresent()) {
+                e=new DataIntegrityViolationException(
+                        messageSource.getMessage(entry.get().getValue(), null, LocaleContextHolder.getLocale()));
+            }
+        }
+
+        return new ErrorInfo(req.getRequestURL(), e);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
