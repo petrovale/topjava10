@@ -11,7 +11,7 @@
     <div class="container">
         <br>
         <h4>Application error: </h4>
-        <h2>${exception.message}</h2>
+        <h2>${message==null ?  exception.message : message}</h2>
 <!--
 <c:forEach items="${exception.stackTrace}" var="stackTrace">
     ${stackTrace}

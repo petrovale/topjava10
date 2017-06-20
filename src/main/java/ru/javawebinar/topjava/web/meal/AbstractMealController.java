@@ -88,7 +88,7 @@ public abstract class AbstractMealController {
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorInfo> duplicateEmailException(HttpServletRequest req, DataIntegrityViolationException e) {
+    public ResponseEntity<ErrorInfo> duplicateDateTimeException(HttpServletRequest req, DataIntegrityViolationException e) {
         return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_DATETIME, HttpStatus.CONFLICT);
     }
 }

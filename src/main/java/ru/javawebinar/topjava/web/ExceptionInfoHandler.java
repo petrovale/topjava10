@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.ApplicationException;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
-import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -27,14 +26,6 @@ public class ExceptionInfoHandler {
 
     @Autowired
     private MessageUtil messageUtil;
-
-    //  http://stackoverflow.com/a/22358422/548473
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseBody
-    public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
-        return logAndGetErrorInfo(req, e, false);
-    }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -53,7 +44,7 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(ApplicationException.class)
     @ResponseBody
     public ResponseEntity<ErrorInfo> applicationError(HttpServletRequest req, ApplicationException appEx) {
-        return getErrorInfoResponseEntity(req, appEx, appEx.getMsgCode(), appEx.getHttpStatus());
+        return getErrorInfoResponseEntity(req, appEx, appEx.getMsgCode(), appEx.getHttpStatus(), appEx.getArgs());
     }
 
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
@@ -93,9 +84,9 @@ public class ExceptionInfoHandler {
         return new ErrorInfo(req.getRequestURL(), cause, details);
     }
 
-    public ResponseEntity<ErrorInfo> getErrorInfoResponseEntity(HttpServletRequest req, Exception e, String msgCode, HttpStatus httpStatus) {
+    public ResponseEntity<ErrorInfo> getErrorInfoResponseEntity(HttpServletRequest req, Exception e, String msgCode, HttpStatus httpStatus, String... args) {
         LOG.warn("Application error: {}", ValidationUtil.getRootCause(e).toString());
-        ErrorInfo errorInfo = logAndGetErrorInfo(req, ValidationUtil.getRootCause(e).getClass().getSimpleName(), messageUtil.getMessage(msgCode));
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, ValidationUtil.getRootCause(e).getClass().getSimpleName(), messageUtil.getMessage(msgCode, args));
         return new ResponseEntity<>(errorInfo, httpStatus);
     }
 }
