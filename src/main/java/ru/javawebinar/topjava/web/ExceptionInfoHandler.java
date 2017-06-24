@@ -22,7 +22,7 @@ import java.util.Arrays;
 @ControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {
-    private static Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
+    private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     @Autowired
     private MessageUtil messageUtil;
@@ -72,20 +72,20 @@ public class ExceptionInfoHandler {
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logException) {
         Throwable rootCause = ValidationUtil.getRootCause(e);
         if (logException) {
-            LOG.error("Exception at request {}" + req.getRequestURL(), rootCause);
+            log.error("Exception at request " + req.getRequestURL(), rootCause);
         } else {
-            LOG.warn("Exception at request {}: {}", req.getRequestURL() + ": " + rootCause.toString());
+            log.warn("Exception at request {}: {}", req.getRequestURL(), rootCause.toString());
         }
         return new ErrorInfo(req.getRequestURL(), rootCause);
     }
 
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, String cause, String... details) {
-        LOG.warn("{} exception at request {}: {}", cause, req.getRequestURL(), Arrays.toString(details));
+        log.warn("{} exception at request {}: {}", cause, req.getRequestURL(), Arrays.toString(details));
         return new ErrorInfo(req.getRequestURL(), cause, details);
     }
 
     public ResponseEntity<ErrorInfo> getErrorInfoResponseEntity(HttpServletRequest req, Exception e, String msgCode, HttpStatus httpStatus, String... args) {
-        LOG.warn("Application error: {}", ValidationUtil.getRootCause(e).toString());
+        log.warn("Application error: {}", ValidationUtil.getRootCause(e).toString());
         ErrorInfo errorInfo = logAndGetErrorInfo(req, ValidationUtil.getRootCause(e).getClass().getSimpleName(), messageUtil.getMessage(msgCode, args));
         return new ResponseEntity<>(errorInfo, httpStatus);
     }

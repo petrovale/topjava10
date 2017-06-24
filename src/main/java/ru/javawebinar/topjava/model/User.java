@@ -33,6 +33,7 @@ public class User extends NamedEntity {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
+    @SafeHtml  // https://stackoverflow.com/questions/17480809
     private String email;
 
     @Column(name = "password", nullable = false)

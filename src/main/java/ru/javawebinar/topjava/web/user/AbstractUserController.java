@@ -36,13 +36,13 @@ public abstract class AbstractUserController {
 
     private boolean modificationRestriction;
 
+    public AbstractUserController(UserService service) {
+        this.service = service;
+    }
+
     @Autowired
     public void setEnvironment(Environment environment) {
         modificationRestriction = environment.acceptsProfiles(Profiles.HEROKU);
-    }
-
-    public AbstractUserController(UserService service) {
-        this.service = service;
     }
 
     public List<User> getAll() {

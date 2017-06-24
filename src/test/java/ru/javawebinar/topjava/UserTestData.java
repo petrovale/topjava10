@@ -12,7 +12,7 @@ import java.util.Objects;
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 
 public class UserTestData {
-    private static final Logger LOG = LoggerFactory.getLogger(UserTestData.class);
+    private static final Logger log = LoggerFactory.getLogger(UserTestData.class);
 
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;
@@ -36,7 +36,7 @@ public class UserTestData {
         if (PasswordUtil.isEncoded(rawOrEncodedPassword)) {
             return rawOrEncodedPassword.equals(password);
         } else if (!PasswordUtil.isMatch(rawOrEncodedPassword, password)) {
-            LOG.error("Password " + password + " doesn't match encoded " + password);
+            log.error("Password " + password + " doesn't match encoded " + password);
             return false;
         }
         return true;

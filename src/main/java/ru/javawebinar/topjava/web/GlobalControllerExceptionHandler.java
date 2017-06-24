@@ -12,24 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
     @Autowired
     private MessageUtil messageUtil;
 
     @ExceptionHandler(ApplicationException.class)
-    public ModelAndView applicationErrorHandler(HttpServletRequest req, ApplicationException e) throws Exception {
+    public ModelAndView applicationErrorHandler(HttpServletRequest req, ApplicationException e) {
         return getView(req, e, messageUtil.getMessage(e.getMsgCode(), e.getArgs()));
     }
 
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) {
         return getView(req, e, null);
     }
 
     private ModelAndView getView(HttpServletRequest req, Exception e, String msg) {
-        LOG.error("Exception at request " + req.getRequestURL(), e);
+        log.error("Exception at request " + req.getRequestURL(), e);
         ModelAndView mav = new ModelAndView("exception/exception");
         mav.addObject("exception", e);
         mav.addObject("message", msg);

@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
-    private static final Logger LOG = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
 
     // Map  userId -> (mealId-> meal)
     private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
@@ -40,12 +40,12 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @PostConstruct
     public void postConstruct() {
-        LOG.info("+++ PostConstruct");
+        log.info("+++ PostConstruct");
     }
 
     @PreDestroy
     public void preDestroy() {
-        LOG.info("+++ PreDestroy");
+        log.info("+++ PreDestroy");
     }
 
     @Override
